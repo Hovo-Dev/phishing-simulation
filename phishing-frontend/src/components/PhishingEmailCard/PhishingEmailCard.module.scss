@@ -1,0 +1,65 @@
+.email {
+  &_card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    max-width: 100%;
+    width: 100%;
+    background-color: #f9f9f9;
+    margin: 16px auto;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    &__header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      align-items: center;
+
+      &__id {
+        font-size: 12px;
+        color: #555;
+      }
+
+      &__status {
+        padding: 4px 8px;
+        border-radius: 4px;
+        text-transform: capitalize;
+      }
+
+      &_status {
+        max-width: 100px;
+        background-color: dodgerblue;
+        width: 100%;
+        border-radius: 8px;
+        padding: 6px 8px;
+        font-weight: 500;
+        font-size: 16px;
+        color: white;
+        text-align: center;
+        line-height: 24px;
+        opacity: 0.6;
+      }
+    }
+
+    &__email {
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    &__content {
+      color: #333;
+
+      a {
+        color: #1e90ff;
+        text-decoration: underline;
+
+        &:hover {
+          color: #0056b3;
+        }
+      }
+    }
+  }
+}

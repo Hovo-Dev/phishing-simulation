@@ -1,0 +1,120 @@
+.wrapper {
+  width: 100%;
+  position: relative;
+
+  &__label {
+    color: #8793a0;
+    box-sizing: border-box;
+    margin-bottom: 4px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+
+    &__large {
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
+
+  &__icon {
+    top: 50%;
+    left: 12px;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    transform: translateY(-50%);
+
+    &__large {
+      left: 16px;
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  &__input {
+    width: 100%;
+    height: 42px;
+    appearance: none;
+    outline: none;
+    padding: 0 8px 0 12px;
+    border-radius: 8px;
+    transition: 0.6s all;
+    box-sizing: border-box;
+    background-color: white;
+    border: 1px solid transparent;
+    color: #0f1e29 !important;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 24px;
+    border-color: #6f7d8c;
+
+    &::placeholder {
+      color: #6f7d8c;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+    }
+
+    &:focus {
+      border-color: #0068af;
+    }
+
+    &__icon {
+      padding-left: 32px;
+    }
+  }
+
+  &__box {
+    position: relative;
+    border-radius: 8px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &__container {
+      gap: 4px;
+      top: 50%;
+      right: 8px;
+      padding-left: 4px;
+      position: absolute;
+      transition: 0.6s all;
+      transform: translateY(-50%);
+      background-color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &__eye {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      svg {
+        @if 20px {
+          width: 20px;
+          height: 20px;
+        }
+
+        path {
+          transition: all 0.5s;
+          fill: #576779;
+        }
+      }
+
+      &__open {
+        font-weight: 300;
+        font-size: 16px;
+        line-height: 24px;
+      }
+    }
+  }
+
+  &__error {
+    position: absolute;
+    color: #ed5151;
+  }
+}

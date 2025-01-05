@@ -1,0 +1,20 @@
+.wrapper {
+  background-color: dodgerblue;
+  width: 100%;
+  border-radius: 8px;
+  padding: 6px 8px;
+  font-weight: 500;
+  font-size: 16px;
+  color: white;
+  line-height: 24px;
+  transition: all 300ms;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  &[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}

@@ -1,0 +1,48 @@
+.wrapper {
+  width: 100%;
+
+  &__head {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    &__profile {
+      p {
+        color: #0f1e29;
+        font-weight: 300;
+        font-size: 16px;
+        line-height: 24px;
+      }
+    }
+
+    &_btn {
+      max-width: 130px;
+    }
+  }
+
+  &__phishing {
+    margin-top: 25px;
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    &__inp {
+      width: 100%;
+      padding-right: 130px;
+    }
+
+    &_btn {
+      right: 0;
+      height: 40px;
+      max-width: 130px;
+      position: absolute;
+    }
+  }
+
+  &__list {
+    margin-top: 42px;
+    gap: 8px;
+    display: flex;
+    flex-direction: column;
+  }
+}
