@@ -1,9 +1,7 @@
-import { ConfigService } from '@nestjs/config';
-import { ObjectLiteral } from 'typeorm';
-import hashingConfig from '../config/hashing';
 import * as argon2 from 'argon2';
-import HashingDriver from '../enums/hashing-driver.enum';
-import { Secret } from '@attract/smart-resources/helpers';
+import { ConfigService } from '@nestjs/config';
+import HashingDriver from "../enums/hashing-driver.enum";
+import hashingConfig from "../config/hashing.config";
 
 export class HashService {
   /**
@@ -30,7 +28,7 @@ export class HashService {
       this.configService.get<HashingDriver>('driver');
 
     if (driver == HashingDriver.ARGON) {
-      return argon2.hash(raw, this.getValidConfig());
+      return argon2.hash(raw);
     }
 
     throw new Error('Unsupported hashing driver.');
@@ -42,31 +40,14 @@ export class HashService {
    * @param raw
    * @param encoded
    */
-  public async verify(raw: string, encoded: string) {
+  public async verify(raw: string, encoded: string): Promise<boolean> {
     const driver: HashingDriver =
       this.configService.get<HashingDriver>('driver');
 
     if (driver == HashingDriver.ARGON) {
-      return argon2.verify(encoded, raw, {
-        secret: this.getValidConfig().secret,
-      });
+      return argon2.verify(encoded, raw);
     }
 
     throw new Error('Unsupported hashing driver: `' + driver + '`.');
-  }
-
-  /**
-   * Fetch valid config from config service.
-   *
-   * @private
-   */
-  private getValidConfig() {
-    const driver = this.configService.get<HashingDriver>('driver');
-    const config = this.configService.get<ObjectLiteral>(`drivers.${driver}`);
-
-    return {
-      ...config,
-      secret: this.configService.get<Secret<Buffer>>('secret').release(),
-    };
   }
 }

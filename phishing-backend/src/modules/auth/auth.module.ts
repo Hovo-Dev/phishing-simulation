@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
+import { AuthService } from './auth.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { User, UserSchema } from '../../common/schemas/user.schema';
-import { JwtStrategy } from "./jwt-strategy.";
+import { AuthController } from './auth.controller';
+import { User, UserSchema } from '../database/schemas/user.schema';
+import UserRepository from "../database/repositories/user.repository";
+import AuthTokenRepository from "../database/repositories/auth-token.repository";
+import {AuthToken, AuthTokenSchema} from "../database/schemas/auth-token.schema";
 
 @Module({
   imports: [
@@ -16,9 +18,10 @@ import { JwtStrategy } from "./jwt-strategy.";
         issuer: 'iss',
       },
     }),
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }, {name: AuthToken.name, schema: AuthTokenSchema}]),
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy],
+  providers: [AuthService, UserRepository, AuthTokenRepository],
+  exports: [JwtModule, UserRepository, AuthTokenRepository],
 })
 export class AuthModule {}

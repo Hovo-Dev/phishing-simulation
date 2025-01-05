@@ -1,4 +1,3 @@
-import { object } from '@attract/smart-resources/helpers';
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { BaseSchema, BaseSchemaAsync, PipeItem, PipeItemAsync } from 'valibot';
 
@@ -78,19 +77,7 @@ export default class ValidationException extends HttpException {
     let result = [];
 
     for (let error of this.errors) {
-      result.push(
-        object(error)
-          .only([
-            'kind',
-            'type',
-            'message',
-            'field',
-            'attribute',
-            'requirement',
-            'input',
-          ])
-          .toObject(),
-      );
+      result.push(error);
     }
 
     return result;

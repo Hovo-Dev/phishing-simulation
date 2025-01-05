@@ -1,4 +1,4 @@
-import { Phishing } from '../../../common/schemas/phishing.schema';
+import { Phishing } from '../../database/schemas/phishing.schema';
 
 export class PhishingDto {
   id: string;

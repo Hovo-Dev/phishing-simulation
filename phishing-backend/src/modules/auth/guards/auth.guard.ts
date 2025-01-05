@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import {JwtService} from "@nestjs/jwt";
 import {CanActivate, ExecutionContext, Injectable, UnauthorizedException} from '@nestjs/common';
-import AuthTokenRepository from "../../modules/database/repositories/auth-token.repository";
+import AuthTokenRepository from "../../database/repositories/auth-token.repository";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -30,11 +30,7 @@ export class AuthGuard implements CanActivate {
       const payload = await this.jwtService.verifyAsync(token);
 
       // Fetch token model after token decoding.
-      const tokenModel = await this.authTokenRepository.findOne({
-        where: {
-          id: payload.jti,
-        },
-      });
+      const tokenModel = await this.authTokenRepository.findPopulatedUser({slug: payload.jti});
 
       // Get users.
       const user = tokenModel.user;

@@ -9,7 +9,7 @@ export type TSignInData = {
 };
 
 export type TRegisterData = {
-  fullName: string;
+  full_name: string;
   email: string;
   password: string;
 };
@@ -37,13 +37,26 @@ export const signUp = createAsyncThunk(
   "auth/register",
   async (body: TRegisterData, { rejectWithValue }) => {
     try {
-      const { data } = (await axiosInstance.post("/auth/signup", body)) as any;
+      const { data } = (await axiosInstance.post("/auth/register", body)) as any;
 
       return data;
     } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
+);
+
+export const logout = createAsyncThunk(
+    "auth/logout",
+    async (_: undefined, { rejectWithValue }) => {
+        try {
+            const { data } = (await axiosInstance.post("/auth/logout")) as any;
+
+            return data;
+        } catch (error: any) {
+            return rejectWithValue(error.response.data);
+        }
+    }
 );
 
 export const userProfile = createAsyncThunk(

@@ -4,13 +4,11 @@ import {
   ExceptionFilter,
   HttpException,
   HttpStatus,
-  LoggerService,
+  LoggerService, NotFoundException,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { HttpAdapterHost } from '@nestjs/core';
-import { EntityNotFoundError, ObjectLiteral } from 'typeorm';
 import { ConfigService } from '@nestjs/config';
-import { object, ObjectBuilder } from '@attract/smart-resources/helpers';
 import ValidationException from './ValidationException';
 import { UserRequest } from '../typings/user-request.type';
 import { Request } from 'express';
@@ -38,7 +36,7 @@ export default class ExceptionHandlerFilter implements ExceptionFilter {
    * @param exception
    * @param host
    */
-  catch(exception: ObjectLiteral, host: ArgumentsHost) {
+  catch(exception: HttpException, host: ArgumentsHost) {
     // In certain situations `httpAdapter` might not be available in the
     // constructor method, thus we should resolve it here.
     const { httpAdapter } = this.httpAdapterHost;
@@ -51,7 +49,7 @@ export default class ExceptionHandlerFilter implements ExceptionFilter {
     const httpStatus = ExceptionHandlerFilter.getExceptionHttpStatus(exception);
 
     // Prepare default response body.
-    let response = object<ExceptionResponseContext>({
+    let response: ExceptionResponseContext = {
       status: httpStatus,
       timestamp: new Date().toISOString(),
       path: httpAdapter.getRequestUrl(ctx.getRequest()),
@@ -60,7 +58,7 @@ export default class ExceptionHandlerFilter implements ExceptionFilter {
         exception,
         this.config.get('app.debug'),
       ),
-    });
+    };
 
     //  Add stack trace if needed.
     if (
@@ -68,13 +66,13 @@ export default class ExceptionHandlerFilter implements ExceptionFilter {
       exception.stack &&
       !(exception instanceof ValidationException)
     ) {
-      response.add('stacktrace', exception.stack.split('\n'));
+      response['stacktrace'] = exception.stack.split('\n');
     }
 
     // Process validation exception.
     // Log any errors except validation if they should not be ignored.
     if (exception instanceof ValidationException) {
-      response.add('errors', exception.renderErrors());
+      response['errors'] = exception.renderErrors();
     } else if (this.shouldLog(response)) {
       ExceptionHandlerFilter.report(this.logger, exception, request);
     }
@@ -82,7 +80,7 @@ export default class ExceptionHandlerFilter implements ExceptionFilter {
     // Reply with exception.
     httpAdapter.reply(
       ctx.getResponse<Response>(),
-      response.toObject(),
+      response,
       httpStatus,
     );
   }
@@ -129,8 +127,8 @@ export default class ExceptionHandlerFilter implements ExceptionFilter {
    *
    * @param exception
    */
-  public static getExceptionHttpStatus(exception: ObjectLiteral): number {
-    if (exception instanceof EntityNotFoundError) {
+  public static getExceptionHttpStatus(exception: HttpException): number {
+    if (exception instanceof NotFoundException) {
       return 404;
     }
 
@@ -145,8 +143,8 @@ export default class ExceptionHandlerFilter implements ExceptionFilter {
    * @private
    * @param response
    */
-  private shouldLog(response: ObjectBuilder<ExceptionResponseContext>) {
-    return response.get('status') >= 500;
+  private shouldLog(response: ExceptionResponseContext) {
+    return response.status >= 500;
   }
 
   /**
@@ -159,12 +157,13 @@ export default class ExceptionHandlerFilter implements ExceptionFilter {
    */
   public static transformMessage(
     httpStatus: number,
-    exception: ObjectLiteral,
+    exception: HttpException,
     isDebug?: boolean,
   ): string {
-    if (exception instanceof EntityNotFoundError) {
+    if (exception instanceof NotFoundException) {
       return 'Could not find any entity to perform this action.';
     }
+
     // If debug enabled , then render all messages.
     // If debug disabled, then render messages only for none 500 errors
     else if (isDebug || httpStatus < 500) {

@@ -1,4 +1,4 @@
-import { useCallback, type FC } from "react";
+import {useCallback, type FC, useEffect} from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -6,7 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { registerScheme } from "utils";
 import { Button, Input } from "components";
 import { signUp } from "store/auth/actions";
-import { useAppDispatch } from "libraries/redux";
+import {useAppDispatch, useAppSelector} from "libraries/redux";
 import { ERoutePaths } from "libraries/router/types";
 
 import styles from "./Register.module.scss";
@@ -20,30 +20,29 @@ export type TRegisterProps = {
 const Register: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const {errors: responseErrors} = useAppSelector((state) => state.auth.signUp);
 
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors, isValid, isDirty },
   } = useForm<TRegisterProps>({
     mode: "onChange",
     resolver: yupResolver(registerScheme),
   });
 
-  const onSubmit = useCallback(
-    (data: TRegisterProps) => {
+  const onSubmit = async  (data: TRegisterProps) => {
       dispatch(
-        signUp({
-          email: data.email,
-          password: data.password,
-          fullName: data.fullName,
-        })
-      );
-      reset();
-    },
-    [dispatch, reset]
-  );
+            signUp({
+                email: data.email,
+                password: data.password,
+                full_name: data.fullName,
+            }))
+            .unwrap()
+            .then(() => {
+                  navigate(ERoutePaths.LogIn);
+            })
+  }
 
   return (
     <div className={styles.wrapper}>
@@ -76,6 +75,8 @@ const Register: FC = () => {
           placeholder="Enter password"
           error={errors?.password?.message as string}
         />
+
+        {responseErrors && (responseErrors.map((error) => <p>{error.message}</p>))}
 
         <Button
           type="submit"

@@ -1,21 +1,21 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { User } from '../../common/schemas/user.schema';
-import { CurrentUser } from '../../common/decorators/user.decorator';
-import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { UserDto } from './dto/output.user.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
+import { AuthGuard } from '../auth/guards/auth.guard';
+import { User } from '../database/schemas/user.schema';
+import { Controller, Get, UseGuards } from '@nestjs/common';
+import {CurrentUser} from "../../libraries/decorators/user.decorator";
 
-@ApiTags('User')
 @Controller('user')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(AuthGuard)
   @Get('profile')
   async getProfile(@CurrentUser() user: User) {
     const data = await this.usersService.getProfile(user.email);
+
     return new UserDto(data);
   }
 }

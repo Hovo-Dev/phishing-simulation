@@ -1,13 +1,13 @@
-import { User } from '../../../common/schemas/user.schema';
+import { User } from '../../database/schemas/user.schema';
 
 export class UserDto {
   id: string;
   email: string;
-  fullName: string;
+  full_name: string;
 
   constructor(user: User) {
     this.id = user.id;
     this.email = user.email;
-    this.fullName = user.fullName;
+    this.full_name = user.full_name;
   }
 }

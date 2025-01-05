@@ -1,37 +1,45 @@
-import { EntityManager, In, Repository, UpdateResult } from 'typeorm';
-import { FindManyOptions } from 'typeorm/find-options/FindManyOptions';
-import { FindOptionsOrder } from 'typeorm/find-options/FindOptionsOrder';
 import { Injectable } from '@nestjs/common';
-import Paginator from '../../../libraries/pagination/paginator';
-import PaginationDto from '../../../libraries/pagination/pagination.dto';
-import cryptoRandomString from '../../../libraries/randomize';
+import {Model, SortOrder} from 'mongoose';
 
 @Injectable()
-export class BaseRepository<Model> extends Repository<Model> {
+export class BaseRepository<T> extends Model<T> {
   /**
    * Paginate current model with given parameters.
    *
-   * @param page
-   * @param limit
-   * @param findManyOptions
+   * @param model
+   * @param options
    */
-  public async paginate(
-    { page = 1, limit = 10 }: PaginationDto,
-    findManyOptions?: FindManyOptions<Model> & FindOptionsOrder<Model>,
-  ): Promise<Paginator<Model>> {
-    const query = {
-      ...findManyOptions,
-      relations: { ...findManyOptions?.relations },
-      where:
-        Array.isArray(findManyOptions?.where) && findManyOptions?.where?.length
-          ? [...findManyOptions?.where]
-          : { ...findManyOptions?.where },
-      order: { ...findManyOptions?.order },
-    };
+  public async paginate(model: Model<T>, {
+    filter = {},
+    page = 1,
+    limit = 10,
+    sort = { createdAt: -1 } as { [key: string]: SortOrder },
+    populate = '',
+  }) {
+    const skip = (page - 1) * limit;
 
-    return this.createQueryBuilder()
-      .setFindOptions(query)
-      .paginate(this.normalizePage(page), this.normalizePerPage(limit));
+    // 1. Use `Promise.all` to fetch paginated results and count in parallel
+    const [items, totalCount] = await Promise.all([
+      model
+          .find(filter)
+          .sort(sort)
+          .skip(skip)
+          .limit(limit)
+          .populate(populate), // Handle population
+      model.countDocuments(filter),
+    ]);
+
+    // 1.2 Count total pages based on document count and limit
+    const totalPages = Math.ceil(totalCount / limit);
+
+    return {
+      items,
+      totalCount,
+      totalPages,
+      currentPage: page,
+      hasNextPage: page < totalPages,
+      hasPrevPage: page > 1,
+    };
   }
 
   /**
@@ -58,37 +66,5 @@ export class BaseRepository<Model> extends Repository<Model> {
     }
 
     return perPage;
-  }
-
-  /**
-   * Create sub query build for a repository target.
-   *
-   * @param alias
-   */
-  public createSubQueryBuilder(alias?: string) {
-    return this.createQueryBuilder(alias).subQuery().from(this.target, alias);
-  }
-
-  /**
-   * Update entity partially.
-   *
-   * @param IDs
-   * @param data
-   * @param manager
-   */
-  public updatePartially(
-    IDs: string | string[],
-    data: Partial<Model>,
-    manager?: EntityManager,
-  ): Promise<UpdateResult> {
-    manager = manager || this.manager;
-
-    return manager.update(
-      this.target,
-      {
-        id: Array.isArray(IDs) ? In(IDs) : IDs,
-      },
-      data as any,
-    );
   }
 }

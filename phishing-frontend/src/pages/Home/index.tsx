@@ -10,11 +10,13 @@ import { PhishingSelectors } from "store/phishing/selectors";
 import PhishingEmailCard, {
   TPhishingEmailCardProps,
 } from "components/PhishingEmailCard";
-import { clearSignIn, userProfile } from "store/auth/actions";
+import {clearSignIn, logout, userProfile} from "store/auth/actions";
 import { useAppDispatch, useAppSelector } from "libraries/redux";
 import { phishingAttempts, phishingPost } from "store/phishing/actions";
 
 import styles from "./Home.module.scss";
+import {ERoutePaths} from "../../libraries/router/types";
+import {useNavigate} from "react-router-dom";
 
 export type TPhishingProps = {
   email: string;
@@ -25,11 +27,13 @@ const Home: FC = () => {
   const profile = useAppSelector(AuthSelectors.userProfile);
   const phishing = useAppSelector(PhishingSelectors.phishing);
 
-  const logOutHandler = () => {
+  const logOutHandler = async () => {
+    await dispatch(logout())
+
     removeCookie("token");
     dispatch(clearSignIn());
 
-    window.location.reload();
+    window.location.reload()
   };
 
   const renderPhishingList = phishing?.phishingAttempts?.phishingList?.map(
@@ -65,7 +69,6 @@ const Home: FC = () => {
   useEffect(() => {
     dispatch(userProfile());
     dispatch(phishingAttempts());
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

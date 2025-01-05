@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
-import { clearSignIn, signIn, userProfile } from "./actions";
+import {clearSignIn, logout, signIn, signUp, userProfile} from "./actions";
 
 export type TAuthState = {
   signIn: {
@@ -14,7 +13,17 @@ export type TAuthState = {
     } | null;
     loading: boolean;
     error: string | null;
-  };
+  },
+  logout: {
+    data: null,
+    loading: boolean,
+    errors: any[] | null,
+  },
+  signUp: {
+    data: null,
+    loading: boolean,
+    errors: any[] | null,
+  },
   userProfile: {
     data: {
       email: string | null;
@@ -28,17 +37,26 @@ export type TAuthState = {
 
 export const initialState: TAuthState = {
   signIn: {
-    data:
-      {
+    data: {
         data: {
           email: null,
           fullName: null,
           id: null,
         },
         access_token: null,
-      } || null,
+    },
     loading: false,
     error: null,
+  },
+  logout: {
+    data: null,
+    loading: false,
+    errors: null,
+  },
+  signUp: {
+    data: null,
+    loading: false,
+    errors: null,
   },
   userProfile: {
     data: null,
@@ -67,6 +85,35 @@ const authSlice = createSlice({
       state.signIn.loading = false;
       state.signIn.error = action.payload as null;
     });
+
+    builder.addCase(logout.pending, (state) => {
+      state.logout.loading = true;
+      state.logout.errors = null;
+    });
+    builder.addCase(logout.fulfilled, (state, { payload }) => {
+      state.logout.loading = false;
+      state.logout.errors = null;
+      state.logout.data = payload;
+    });
+    builder.addCase(logout.rejected, (state, action) => {
+      state.logout.loading = false;
+      state.logout.errors = (action.payload as any).errors as null;
+    });
+
+    builder.addCase(signUp.pending, (state) => {
+      state.signUp.loading = true;
+      state.signUp.errors = null;
+    });
+    builder.addCase(signUp.fulfilled, (state, { payload }) => {
+      state.signUp.loading = false;
+      state.signUp.errors = null;
+      state.signUp.data = payload;
+    });
+    builder.addCase(signUp.rejected, (state, action) => {
+      state.signUp.loading = false;
+      state.signUp.errors = (action.payload as any).errors as null;
+    });
+
     builder.addCase(clearSignIn.fulfilled, (state) => {
       state.signIn.loading = false;
       state.signIn.error = null;

@@ -11,5 +11,6 @@ export enum ERoutePaths {
   Home = "/",
   LogIn = "/login",
   Register = "/register",
+  Phishing = "/phishing/click",
   Error = "*",
 }

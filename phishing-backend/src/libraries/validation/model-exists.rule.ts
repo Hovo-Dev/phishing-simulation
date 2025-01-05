@@ -1,25 +1,25 @@
-import { In, Repository, SelectQueryBuilder } from 'typeorm';
+import {FilterQuery} from "mongoose";
 
 export default <T>(
   field: string,
-  repository: Repository<T>,
-  callback?: (
-    query: SelectQueryBuilder<T>,
-    alias: string,
-  ) => SelectQueryBuilder<T>,
+  repository: any,
+  callback?: (query: FilterQuery<T>) => FilterQuery<T>,
 ) => {
   return async (input) => {
-    // Create alias for a table.
-    const alias = crypto.randomUUID();
     const count = Array.isArray(input) ? input.length : 1;
 
-    let query = repository.createQueryBuilder(alias).where({
-      [field]: Array.isArray(input) ? In(input) : input,
-    });
+    // Create base query to find records
+    let query = {
+      [field]: Array.isArray(input) ? { $in: input } : input,
+    } as FilterQuery<T>
 
     // Apply callback modifications if provided
-    query = callback ? callback(query, alias) : query;
+    query = callback ? callback(query) : query;
 
-    return count === (await query.getCount());
+    // Count matching records
+    const matchedCount = await repository.countDocuments(query);
+
+    // Check if the count matches the input length
+    return count === matchedCount;
   };
 };

@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Phishing, T_PhishingDoc } from '../../common/schemas/phishing.schema';
+import { Phishing, T_PhishingDoc } from '../database/schemas/phishing.schema';
 import * as process from 'node:process';
 import { MailService } from '../mail/mail.service';
 

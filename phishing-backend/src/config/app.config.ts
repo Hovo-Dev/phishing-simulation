@@ -1,29 +1,15 @@
 import { registerAs } from '@nestjs/config';
 
-export interface IAppConfig {
-  userSecret: string;
-  userExpiresIn: string;
-  port: number;
-  databaseUrl: string;
-  email: string;
-  password: string;
-}
-
 export default registerAs(
   'app',
-  (): IAppConfig => ({
-    userSecret: process.env.JWT_USER_SECRET,
-    userExpiresIn: process.env.JWT_USER_TOKEN_EXPIRES_IN,
+  () => ({
+    user_secret: process.env.JWT_USER_SECRET,
+    user_expires_in: process.env.JWT_USER_TOKEN_EXPIRES_IN,
     port: parseInt(process.env.PORT, 10) || 3000,
-    databaseUrl: process.env.DATABASE_URL,
+    database_url: process.env.DATABASE_URL,
+    debug: true,
     email: process.env.EMAIL,
     password: process.env.PASSWORD,
   }),
 );
-export interface IJwtPayload {
-  id: number;
-  email: string;
-}
-export enum SALT_ROUNDS {
-  SALT_ROUNDS_VALUE = 10,
-}
+
