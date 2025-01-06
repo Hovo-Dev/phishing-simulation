@@ -12,7 +12,7 @@ export type TAuthState = {
       access_token: string | null;
     } | null;
     loading: boolean;
-    error: string | null;
+    errors: any[] | null;
   },
   logout: {
     data: null,
@@ -46,7 +46,7 @@ export const initialState: TAuthState = {
         access_token: null,
     },
     loading: false,
-    error: null,
+    errors: null,
   },
   logout: {
     data: null,
@@ -72,18 +72,16 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(signIn.pending, (state) => {
       state.signIn.loading = true;
-      state.signIn.error = null;
+      state.signIn.errors = null;
     });
-
     builder.addCase(signIn.fulfilled, (state, { payload }) => {
       state.signIn.loading = false;
-      state.signIn.error = null;
+      state.signIn.errors = null;
       state.signIn.data = payload;
     });
-
     builder.addCase(signIn.rejected, (state, action) => {
       state.signIn.loading = false;
-      state.signIn.error = action.payload as null;
+      state.signIn.errors = (action.payload as any).errors as null;
     });
 
     builder.addCase(logout.pending, (state) => {
@@ -116,7 +114,7 @@ const authSlice = createSlice({
 
     builder.addCase(clearSignIn.fulfilled, (state) => {
       state.signIn.loading = false;
-      state.signIn.error = null;
+      state.signIn.errors = null;
       state.signIn.data = null;
     });
 

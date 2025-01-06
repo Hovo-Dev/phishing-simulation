@@ -39,7 +39,10 @@ export default class LoginValidationPipe extends DefaultValidationPipe {
         v.string(),
         v.trim(),
         v.toLowerCase(),
-        v.checkAsync(modelExistsRule('email', this.userRepository))
+        v.checkAsync(
+          modelExistsRule('email', this.userRepository),
+          () => 'User Not Found',
+        ),
       ),
       password: v.pipe(
           v.string(),

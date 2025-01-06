@@ -10,6 +10,7 @@ import {useAppDispatch, useAppSelector} from "libraries/redux";
 import { ERoutePaths } from "libraries/router/types";
 
 import styles from "./Register.module.scss";
+import {AuthSelectors} from "../../store/auth/selectors";
 
 export type TRegisterProps = {
   email: string;
@@ -20,7 +21,7 @@ export type TRegisterProps = {
 const Register: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const {errors: responseErrors} = useAppSelector((state) => state.auth.signUp);
+  const {errors: responseErrors} = useAppSelector(AuthSelectors.authSignUp);
 
   const {
     register,
@@ -76,7 +77,8 @@ const Register: FC = () => {
           error={errors?.password?.message as string}
         />
 
-        {responseErrors && (responseErrors.map((error) => <p>{error.message}</p>))}
+
+        {responseErrors && (responseErrors?.map((error) => <p className={styles.wrapper__form__err}>{error.message}</p>))}
 
         <Button
           type="submit"

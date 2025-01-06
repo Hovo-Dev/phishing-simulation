@@ -6,10 +6,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { loginScheme } from "utils";
 import { Button, Input } from "components";
 import { signIn } from "store/auth/actions";
-import { useAppDispatch } from "libraries/redux";
+import {useAppDispatch, useAppSelector} from "libraries/redux";
 import { ERoutePaths } from "libraries/router/types";
 
 import styles from "./LogIn.module.scss";
+import {AuthSelectors} from "../../store/auth/selectors";
 
 export type TLogInProps = {
   email: string;
@@ -19,6 +20,8 @@ export type TLogInProps = {
 const LogIn: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
+  const {errors: responseErrors} = useAppSelector(AuthSelectors.authSignIn);
 
   const {
     register,
@@ -35,8 +38,6 @@ const LogIn: FC = () => {
     },
     [dispatch]
   );
-
-  console.log(process.env.REACT_APP_BASE_URL);
 
   return (
     <div className={styles.wrapper}>
@@ -61,6 +62,8 @@ const LogIn: FC = () => {
           placeholder="Enter password"
           error={errors?.password?.message as string}
         />
+
+        {responseErrors && (responseErrors?.map((error) => <p className={styles.wrapper__form__err}>{error.message}</p>))}
 
         <Button
           type="submit"

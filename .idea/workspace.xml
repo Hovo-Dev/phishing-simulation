@@ -4,7 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="28d20fc5-57b8-465e-94fa-93773bd286e6" name="Changes" comment="" />
+    <list default="true" id="28d20fc5-57b8-465e-94fa-93773bd286e6" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phishing-backend/src/modules/auth/validation/login.pipeline.ts" beforeDir="false" afterPath="$PROJECT_DIR$/phishing-backend/src/modules/auth/validation/login.pipeline.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phishing-frontend/src/pages/Home/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/phishing-frontend/src/pages/Home/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phishing-frontend/src/pages/LogIn/LogIn.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/phishing-frontend/src/pages/LogIn/LogIn.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phishing-frontend/src/pages/LogIn/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/phishing-frontend/src/pages/LogIn/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phishing-frontend/src/pages/Register/Register.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/phishing-frontend/src/pages/Register/Register.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phishing-frontend/src/pages/Register/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/phishing-frontend/src/pages/Register/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phishing-frontend/src/store/auth/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/phishing-frontend/src/store/auth/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phishing-frontend/src/store/auth/selectors.ts" beforeDir="false" afterPath="$PROJECT_DIR$/phishing-frontend/src/store/auth/selectors.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -26,7 +36,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
     "ignore_missing_gitignore": "true",
-    "last_opened_file_path": "/Users/hovo-dev/WebstormProjects/phishing-attempt/phishing-frontend/src/pages/Phishing",
+    "last_opened_file_path": "/Users/hovo-dev/WebstormProjects/phishing-attempt/phishing-backend",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -38,11 +48,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/phishing-backend" />
       <recent name="$PROJECT_DIR$/phishing-frontend/src/pages/Phishing" />
       <recent name="$PROJECT_DIR$/phishing-backend/src/libraries/decorators" />
       <recent name="$PROJECT_DIR$/phishing-backend/src/config" />
       <recent name="$PROJECT_DIR$/phishing-backend/src/modules/database" />
-      <recent name="$PROJECT_DIR$/phishing-backend/src" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/phishing-backend/src/modules/auth" />
@@ -68,6 +78,8 @@
       <workItem from="1736087614425" duration="23687000" />
       <workItem from="1736119834613" duration="509000" />
       <workItem from="1736120347854" duration="44000" />
+      <workItem from="1736120407421" duration="55000" />
+      <workItem from="1736154190973" duration="1530000" />
     </task>
     <servers />
   </component>

@@ -62,6 +62,7 @@ const Home: FC = () => {
     (data: TPhishingProps) => {
       dispatch(phishingPost({ email: data.email }));
       reset();
+      dispatch(phishingAttempts());
     },
     [dispatch, reset]
   );
@@ -70,7 +71,7 @@ const Home: FC = () => {
     dispatch(userProfile());
     dispatch(phishingAttempts());
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [])
 
   return (
     <div className={styles.wrapper}>
