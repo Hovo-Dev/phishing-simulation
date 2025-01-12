@@ -5,6 +5,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import {Logger, ValidationPipe} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import ExceptionHandlerFilter from "./exceptions/exception-handler.filter";
+import {PhishingService} from "./modules/phishing/phishing.service";
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -30,6 +31,10 @@ async function bootstrap() {
   app.useGlobalFilters(
       new ExceptionHandlerFilter(httpAdapter, configService, logger),
   );
+
+  const phishingService = app.get(PhishingService);
+
+  phishingService.scheduleExpiredAttempts();
 
   const APP_PORT = configService.get('app.port');
   await app.listen(APP_PORT, () => {

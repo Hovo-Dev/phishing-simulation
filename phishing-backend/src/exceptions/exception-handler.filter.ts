@@ -111,7 +111,7 @@ export default class ExceptionHandlerFilter implements ExceptionFilter {
       // Get raw error for a log.
       message,
       context: {
-        user: request['user']?.toLoggerObject(),
+        user: request['user']?.toLoggerObject?.(),
         response:
           exception instanceof HttpException
             ? exception.getResponse()

@@ -6,14 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="28d20fc5-57b8-465e-94fa-93773bd286e6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phishing-backend/src/modules/auth/validation/login.pipeline.ts" beforeDir="false" afterPath="$PROJECT_DIR$/phishing-backend/src/modules/auth/validation/login.pipeline.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phishing-frontend/src/pages/Home/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/phishing-frontend/src/pages/Home/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phishing-frontend/src/pages/LogIn/LogIn.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/phishing-frontend/src/pages/LogIn/LogIn.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phishing-frontend/src/pages/LogIn/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/phishing-frontend/src/pages/LogIn/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phishing-frontend/src/pages/Register/Register.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/phishing-frontend/src/pages/Register/Register.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phishing-frontend/src/pages/Register/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/phishing-frontend/src/pages/Register/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phishing-frontend/src/store/auth/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/phishing-frontend/src/store/auth/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phishing-frontend/src/store/auth/selectors.ts" beforeDir="false" afterPath="$PROJECT_DIR$/phishing-frontend/src/store/auth/selectors.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phishing-backend/src/exceptions/exception-handler.filter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/phishing-backend/src/exceptions/exception-handler.filter.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phishing-backend/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/phishing-backend/src/main.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phishing-backend/src/modules/database/schemas/phishing.schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/phishing-backend/src/modules/database/schemas/phishing.schema.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phishing-backend/src/modules/phishing/phishing.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/phishing-backend/src/modules/phishing/phishing.service.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +38,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
     "ts.external.directory.path": "/Users/hovo-dev/WebstormProjects/phishing-attempt/phishing-backend/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
@@ -79,7 +76,9 @@
       <workItem from="1736119834613" duration="509000" />
       <workItem from="1736120347854" duration="44000" />
       <workItem from="1736120407421" duration="55000" />
-      <workItem from="1736154190973" duration="1530000" />
+      <workItem from="1736154190973" duration="3745000" />
+      <workItem from="1736316741143" duration="359000" />
+      <workItem from="1736671478952" duration="5318000" />
     </task>
     <servers />
   </component>

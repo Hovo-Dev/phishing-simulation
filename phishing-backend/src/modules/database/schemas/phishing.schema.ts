@@ -3,9 +3,14 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 export type T_PhishingDoc = Phishing & Document;
 
-@Schema({
-  timestamps: true,
-})
+export enum PhishingStatus {
+  Pending = 'Pending',
+  Clicked = 'Clicked',
+  Failed = 'Failed',
+  Expired = 'Expired',
+}
+
+@Schema()
 export class Phishing extends Document {
   @Prop()
   email: string;
@@ -13,8 +18,14 @@ export class Phishing extends Document {
   @Prop()
   content: string;
 
-  @Prop({ default: 'pending' })
-  status: string;
+  @Prop({ default: PhishingStatus.Pending, enum: PhishingStatus })
+  status: PhishingStatus;
+
+  @Prop({ default: () => new Date() })
+  createdAt?: Date;
+
+  @Prop({ default: () => new Date() })
+  updatedAt?: Date;
 }
 
 export const PhishingSchema = SchemaFactory.createForClass(Phishing);
